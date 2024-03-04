@@ -71,7 +71,28 @@ def get_word_score(word, n):
     n: integer (HAND_SIZE; i.e., hand size required for additional points)
     returns: int >= 0
     """
-    # TO DO ... <-- Remove this comment when you code this function
+
+    assert isinstance(word,str), "word must be a string"
+    word = word.lower()
+    assert word.islower(), "lower() conversion failed"
+    assert len(word) > 0, "word must not be empty"
+    assert isinstance(n, int), "n must be an int"
+    assert n > 0, "hand length n must not be 0"
+
+    #magic coding
+    word_score = 1
+
+    #checking post-conditions
+    assert word_score > 0, "score calculation failed"
+    assert isinstance(word_score, int), "score must be int"
+    word_score = sum(SCRABBLE_LETTER_VALUES[letter] for letter in word)*len(word)
+    if len(word) == n:
+        score += 50
+    return word_score
+
+
+
+
 
 
 #
@@ -94,6 +115,7 @@ def display_hand(hand):
             print(letter, end=" ")       # print all on the same line
     print()                             # print an empty line
 
+display_hand({'a':1 , 'x':2})
 #
 # Problem #2: Make sure you understand how this function works and what it does!
 #
@@ -123,6 +145,7 @@ def deal_hand(n):
         hand[x] = hand.get(x, 0) + 1
 
     return hand
+print(deal_hand(HAND_SIZE))
 
 #
 # Problem #2: Update a hand by removing letters
@@ -146,6 +169,18 @@ def update_hand(hand, word):
     returns: dictionary (string -> int)
     """
     # TO DO ... <-- Remove this comment when you code this function
+    '''
+    make a hand.cpoy()
+        for every in word
+        use the letter as a key to look up in the handcopy dict 
+        and subtract one from the handopy dict values letter count
+    
+    return handcopy
+    '''
+    handcopy = hand.copy()
+    for letter in word:
+        handcopy[letter] = handcopy.get(letter) - 1
+    return handcopy
 
 
 #
