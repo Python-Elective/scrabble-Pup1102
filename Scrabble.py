@@ -57,15 +57,42 @@ def get_frequency_dict(sequence):
 # Problem #1: Scoring a word
 #
 def get_word_score(word, n):
+    """
+    Returns the score for a word. Assumes the word is a valid word.
+
+    The score for a word is the sum of the points for letters in the
+    word, multiplied by the length of the word, PLUS 50 points if all n
+    letters are used on the first turn.
+
+    Letters are scored as in Scrabble; A is worth 1, B is worth 3, C is
+    worth 3, D is worth 2, E is worth 1, and so on (see SCRABBLE_LETTER_VALUES)
+
+    word: string (lowercase letters)
+    n: integer (HAND_SIZE; i.e., hand size required for additional points)
+    returns: int >= 0
+    """
+
+    assert isinstance(word,str), "word must be a string"
     word = word.lower()
-    score = sum(SCRABBLE_LETTER_VALUES[letter] for letter in word)*len(word)
-    
+    assert word.islower(), "lower() conversion failed"
+    assert len(word) > 0, "word must not be empty"
+    assert isinstance(n, int), "n must be an int"
+    assert n > 0, "hand length n must not be 0"
+
+    #magic coding
+    word_score = 1
+
+    #checking post-conditions
+    assert word_score > 0, "score calculation failed"
+    assert isinstance(word_score, int), "score must be int"
+    word_score = sum(SCRABBLE_LETTER_VALUES[letter] for letter in word)*len(word)
     if len(word) == n:
         score += 50
-    return score
+    return word_score
 
 
-    # TO DO ... <-- Remove this comment when you code this function
+
+
 
 
 #
@@ -150,7 +177,10 @@ def update_hand(hand, word):
     
     return handcopy
     '''
-    hand
+    handcopy = hand.copy()
+    for letter in word:
+        handcopy[letter] = handcopy.get(letter) - 1
+    return handcopy
 
 
 #
